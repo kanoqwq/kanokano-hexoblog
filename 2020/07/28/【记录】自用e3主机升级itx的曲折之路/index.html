@@ -1,0 +1,115 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>【记录】自用e3主机升级itx的曲折之路 | Hexo</title><meta name="description" content="[title]期末刚回家，闲着没事准备把自己用的主机改成A4主机 :haha:**[&#x2F;title] **原来的机箱长这样:  现有的主板是MATX的，这个当然在itx机箱里面装不下，所以要卖掉 PS：显卡长的更离谱，也要卖掉（心疼），原来的显卡是一张迪兰的rx470   [caption id&#x3D;”attachment_469” align&#x3D;”alignnone” width&#x3D;”171”]"><meta name="keywords" content="整活,装机"><meta name="author" content="John Doe"><meta name="copyright" content="John Doe"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://yoursite.com/2020/07/28/%E3%80%90%E8%AE%B0%E5%BD%95%E3%80%91%E8%87%AA%E7%94%A8e3%E4%B8%BB%E6%9C%BA%E5%8D%87%E7%BA%A7itx%E7%9A%84%E6%9B%B2%E6%8A%98%E4%B9%8B%E8%B7%AF/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="【记录】自用e3主机升级itx的曲折之路"><meta property="og:url" content="http://yoursite.com/2020/07/28/%E3%80%90%E8%AE%B0%E5%BD%95%E3%80%91%E8%87%AA%E7%94%A8e3%E4%B8%BB%E6%9C%BA%E5%8D%87%E7%BA%A7itx%E7%9A%84%E6%9B%B2%E6%8A%98%E4%B9%8B%E8%B7%AF/"><meta property="og:site_name" content="Hexo"><meta property="og:description" content="[title]期末刚回家，闲着没事准备把自己用的主机改成A4主机 :haha:**[&#x2F;title] **原来的机箱长这样:  现有的主板是MATX的，这个当然在itx机箱里面装不下，所以要卖掉 PS：显卡长的更离谱，也要卖掉（心疼），原来的显卡是一张迪兰的rx470   [caption id&#x3D;”attachment_469” align&#x3D;”alignnone” width&#x3D;”171”]"><meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="article:published_time" content="2020-07-28T07:24:11.000Z"><meta property="article:modified_time" content="2020-08-16T09:43:02.799Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.0.2',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  bookmark: {
+    message_prev: 'Press',
+    message_next: 'to bookmark this page'
+  },
+  runtime_unit: 'days',
+  runtime: false,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: false,
+  postUpdate: '2020-08-16 17:43:02'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 5.0.2"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="https://gravatar.loli.net/avatar/caa50e6e1d3538931cdbe4bf306f6c30" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">52</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">Tags</div><div class="length_num">41</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">Categories</div><div class="length_num">9</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/game-lite/"><i class="fa-fw fas fa-game"></i><span> game</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">Hexo</a></span><span class="pull-right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/game-lite/"><i class="fa-fw fas fa-game"></i><span> game</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">【记录】自用e3主机升级itx的曲折之路</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2020-07-28T07:24:11.000Z" title="Created 2020-07-28 15:24:11">2020-07-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2020-08-16T09:43:02.799Z" title="Updated 2020-08-16 17:43:02">2020-08-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%B0%E5%BD%95/">记录</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%97%A5%E5%B8%B8/">日常</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><p>[title]<strong>期末刚回家，闲着没事准备把自己用的主机改成A4主机 :haha:**[/title] **原来的机箱长这样:</strong> <img src= "/img/loading.gif" data-lazy-src="https://image.kanokano.cn/2020/07/20200728080847572.jpg"> <strong>现有的主板是MATX的，这个当然在itx机箱里面装不下，所以要卖掉</strong> <strong>PS：显卡长的更离谱，也要卖掉（心疼），原来的显卡是一张迪兰的rx470</strong>   [caption id=”attachment_469” align=”alignnone” width=”171”]<img src= "/img/loading.gif" data-lazy-src="https://image.kanokano.cn/2020/07/20200728081736800.jpg">               （网图）[/caption] <strong>然后就可以琢磨着自己买itx要用到的配件了，机箱散热之类的：</strong>   [successbox title=” “] <strong>用到的材料：</strong></p>
+<ul>
+<li><strong>跃星D01机箱+送的显卡延长线（此处伏笔 :pen: ）—149r</strong></li>
+<li><strong>乔斯伯HP400 CPU散热器（全新） —80R</strong></li>
+<li><strong>酷鱼400w 1U电源 已经改装静音风扇 —160R</strong></li>
+<li><strong>蓝宝石RX470D 单风扇版  —399R</strong></li>
+<li> <strong>微星B75ia-e33 17*17的ITX板子，送i3 2100亮机U —280R</strong></li>
+<li><strong>14块两个AVC暴力扇</strong></li>
+</ul>
+<p>  [/successbox]   <strong>一共1082元，也有点太贵了的样子hhhh :meng:  不过想了一下，毕竟是itx，这点钱估计也不多。</strong> <strong>经过两天的等待，快递都到了，直接开装~</strong> <img src= "/img/loading.gif" data-lazy-src="https://image.kanokano.cn/2020/07/20200728085448446.jpg"> <strong>装的时候忽然发现，usb3.0挡住了机械硬盘安装的位置 :kuanghan: ，后面买了一个usb3.0软排延长线解决 如下图：</strong> <img src= "/img/loading.gif" data-lazy-src="https://image.kanokano.cn/2020/07/20200728085751469-scaled.jpg"> <strong>解决了机械硬盘安装位置后，发现固态又装不下了 :leng: ** **想了个馊主意，拆开硬盘看看：</strong> <img src= "/img/loading.gif" data-lazy-src="https://image.kanokano.cn/2020/07/20200728085939599-e1595926825649.jpg"> <strong>啊，这，这么短一个，那就好办了 :xiaoyan: ** **开始改造~</strong> <img src= "/img/loading.gif" data-lazy-src="https://image.kanokano.cn/2020/07/20200728090236401.jpg"> <img src= "/img/loading.gif" data-lazy-src="https://image.kanokano.cn/2020/07/20200728090250318.jpg"> <strong>胶带+导热硅脂+锡箔胶带做好散热和保护，贴到机箱角落里面，完美</strong> <img src= "/img/loading.gif" data-lazy-src="https://image.kanokano.cn/2020/07/20200728090532763.jpg"> <strong>换上新的乔斯伯散热器，装上显卡延长线和显卡，直接测试~</strong> <img src= "/img/loading.gif" data-lazy-src="https://image.kanokano.cn/2020/07/20200728090639505-e1595927234240.jpg"> <strong>随后，我就发现了问题 :pen: 只要一进入furmark烤机或者路大娘测试，显卡温度不高，帧数低的离谱，整台电脑都是卡顿状态</strong> [video mp4=”<a target="_blank" rel="noopener" href="https://image.kanokano.cn/2020/07/20200728092220656.mp4&quot;/]/[/video/]">https://image.kanokano.cn/2020/07/20200728092220656.mp4&quot;\]\[/video\]</a> 排除了两天，先是给显卡清灰，换硅脂垫什么的： <img src= "/img/loading.gif" data-lazy-src="https://image.kanokano.cn/2020/07/20200728092617280.jpg"> <strong>最后发现是显卡延长线的问题，翻车，没办法，只能重新买一个了 :pen:</strong> </p>
+<hr>
+<p>2020-7-28： <strong>线暂时还没到，先直插裸机用用。。</strong></p>
+<hr>
+<p>7.29： <strong>显卡延长线到了，由于事先知道延长线和机箱螺柱位置不兼容，所以顺便出去改一下机箱螺柱 :huaji15: ** **在旁边打一个孔放上主板螺柱就行了，切掉原来的螺柱位：</strong> <img src= "/img/loading.gif" data-lazy-src="https://image.kanokano.cn/2020/07/20200729122535245.jpg"> <img src= "/img/loading.gif" data-lazy-src="https://image.kanokano.cn/2020/07/20200729122700623-scaled.jpg"> <img src= "/img/loading.gif" data-lazy-src="https://image.kanokano.cn/2020/07/20200729122714359-scaled.jpg"> <strong>另一边有点偏了，直接上轧带~</strong> <strong>然后装好上电开机~</strong> <img src= "/img/loading.gif" data-lazy-src="https://image.kanokano.cn/2020/07/20200729123420950.jpg"> <strong>嗯。。温度还可以，测试不掉帧，可以愉快玩耍了 :haha2: ** **东西都买了</strong>。<strong>缺钱，当然要卖掉它们2333 :huaji5:</strong> <img src= "/img/loading.gif" data-lazy-src="https://image.kanokano.cn/2020/07/20200728082138358.jpg"> <strong>中间出现了一个小插曲（大嘘），两个快递是同时发的，发的顺丰，结果一到家回过神来，发现好像发反了，随后又去网点改，第二天再去看物流，发现又改反了 :kuanghan:  没办法，只能加钱转寄了，好不容易等到快递送达，发现显卡老哥和我说显卡被磕了。心想，完了，看了下买家发来的损坏图，还好只是背板变形，显卡还是能用的，热管也没有坏：</strong> <img src= "/img/loading.gif" data-lazy-src="https://image.kanokano.cn/2020/07/20200728082637435.jpg"> <strong>当场打顺丰客服请求赔偿，由于没有保价，只能赔偿运费的七倍（最高），不过这些钱也够买家换一个背板的了 :hu:  不过顺丰的客服态度实在是太好了，赞~</strong>   [dangerbox title=””] 总结： 这次装机可谓是十分曲折，，，已经超出预算一半多了，不过退一步想，装好了还是很不错的，节省了桌面一大半空间（所以为什么不买个大桌子）以后也能用背包带着走了，开心~ [/dangerbox]</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">John Doe</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://yoursite.com/2020/07/28/%E3%80%90%E8%AE%B0%E5%BD%95%E3%80%91%E8%87%AA%E7%94%A8e3%E4%B8%BB%E6%9C%BA%E5%8D%87%E7%BA%A7itx%E7%9A%84%E6%9B%B2%E6%8A%98%E4%B9%8B%E8%B7%AF/">http://yoursite.com/2020/07/28/%E3%80%90%E8%AE%B0%E5%BD%95%E3%80%91%E8%87%AA%E7%94%A8e3%E4%B8%BB%E6%9C%BA%E5%8D%87%E7%BA%A7itx%E7%9A%84%E6%9B%B2%E6%8A%98%E4%B9%8B%E8%B7%AF/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%B4%E6%B4%BB/">整活</a><a class="post-meta__tags" href="/tags/%E8%A3%85%E6%9C%BA/">装机</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/08/03/%E3%80%90%E6%95%B4%E7%90%86%E3%80%91%E8%87%AA%E7%94%A8%E9%BB%91%E8%8B%B9%E6%9E%9Cefi%EF%BC%8C%E5%85%BC%E5%AE%B910-15-4%E4%BB%A5%E4%B8%8B/"><img class="prev-cover" data-lazy-src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">【整理】自用黑苹果EFI，兼容10.15</div></div></a></div><div class="next-post pull-right"><a href="/2020/07/15/%E8%85%BE%E8%AE%AF%E8%8E%AB%E5%90%8D%E5%85%B6%E5%A6%99%E5%86%BB%E7%BB%93%E4%BA%86%E6%88%91%E7%9A%84qq%EF%BC%8C%E5%A4%AA%E6%A3%92%E5%95%A6%EF%BC%88%E8%8B%A6%E7%AC%91%EF%BC%89/"><img class="next-cover" data-lazy-src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">腾讯莫名其妙冻结了我的QQ，太棒啦（苦笑）</div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fas fa-thumbs-up fa-fw"></i><span> Related Articles</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2020/03/23/log记一次失败的维修过程/" title="[Log]记一次失败的维修过程"><img class="relatedPosts_cover" data-lazy-src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2020-03-23</div><div class="relatedPosts_title">[Log]记一次失败的维修过程</div></div></a></div><div class="relatedPosts_item"><a href="/2020/03/25/小练习基于c写的简单图种生成器/" title="[小练习]基于C写的简单图种生成器"><img class="relatedPosts_cover" data-lazy-src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2020-03-25</div><div class="relatedPosts_title">[小练习]基于C写的简单图种生成器</div></div></a></div></div></div></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2020 By John Doe</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="Increase Font Size"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="Decrease Font Size"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>

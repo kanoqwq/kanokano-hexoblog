@@ -1,0 +1,138 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>[教程]使用jsproxy给站点做镜像/代理 | Hexo</title><meta name="description" content="最近cloudflare在中国大陆访问有点抽风，国内一些地区的移动宽带甚至无法访问，所以就想着用之前白嫖的GCP来搭建反向代理服务，但是nginx&#x2F;Apache提供的简单反向代理服务只能代理一个页面，有些博客&#x2F;网站的图片和外链却无法代理，所以单纯的反向代理是有很大局限性的。  找遍了各大网站，终于发现(白嫖)了一个比较高端的网页代理—-jsproxy https:&#x2F;&#x2F;github.com&#x2F;Ethe"><meta name="keywords" content="jsproxy,科学上网"><meta name="author" content="John Doe"><meta name="copyright" content="John Doe"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://yoursite.com/2020/04/22/%E6%95%99%E7%A8%8B%E4%BD%BF%E7%94%A8jsproxy%E7%BB%99%E7%AB%99%E7%82%B9%E5%81%9A%E9%95%9C%E5%83%8F-%E4%BB%A3%E7%90%86/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="[教程]使用jsproxy给站点做镜像/代理"><meta property="og:url" content="http://yoursite.com/2020/04/22/%E6%95%99%E7%A8%8B%E4%BD%BF%E7%94%A8jsproxy%E7%BB%99%E7%AB%99%E7%82%B9%E5%81%9A%E9%95%9C%E5%83%8F-%E4%BB%A3%E7%90%86/"><meta property="og:site_name" content="Hexo"><meta property="og:description" content="最近cloudflare在中国大陆访问有点抽风，国内一些地区的移动宽带甚至无法访问，所以就想着用之前白嫖的GCP来搭建反向代理服务，但是nginx&#x2F;Apache提供的简单反向代理服务只能代理一个页面，有些博客&#x2F;网站的图片和外链却无法代理，所以单纯的反向代理是有很大局限性的。  找遍了各大网站，终于发现(白嫖)了一个比较高端的网页代理—-jsproxy https:&#x2F;&#x2F;github.com&#x2F;Ethe"><meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="article:published_time" content="2020-04-22T10:45:24.000Z"><meta property="article:modified_time" content="2020-08-16T09:43:02.731Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.0.2',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  bookmark: {
+    message_prev: 'Press',
+    message_next: 'to bookmark this page'
+  },
+  runtime_unit: 'days',
+  runtime: false,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: false,
+  postUpdate: '2020-08-16 17:43:02'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 5.0.2"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="https://gravatar.loli.net/avatar/caa50e6e1d3538931cdbe4bf306f6c30" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">52</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">Tags</div><div class="length_num">41</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">Categories</div><div class="length_num">9</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/game-lite/"><i class="fa-fw fas fa-game"></i><span> game</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">Hexo</a></span><span class="pull-right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/game-lite/"><i class="fa-fw fas fa-game"></i><span> game</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">[教程]使用jsproxy给站点做镜像/代理</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2020-04-22T10:45:24.000Z" title="Created 2020-04-22 18:45:24">2020-04-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2020-08-16T09:43:02.731Z" title="Updated 2020-08-16 17:43:02">2020-08-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%99%E7%A8%8B/">教程</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><p>最近cloudflare在中国大陆访问有点抽风，国内一些地区的移动宽带甚至无法访问，所以就想着用之前白嫖的GCP来搭建反向代理服务，但是nginx/Apache提供的简单反向代理服务只能代理一个页面，有些博客/网站的图片和外链却无法代理，所以单纯的反向代理是有很大局限性的。</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://s1.ax1x.com/2020/04/23/JUWdl8.jpg"></p>
+<p><strong>找遍了各大网站，终于发现(白嫖)了一个比较高端的网页代理—-jsproxy</strong></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/EtherDream/jsproxy">https://github.com/EtherDream/jsproxy</a></p>
+<p>反向代理基于nginx，可以完整，正常地代理绝大多数站点（具体bug见<a target="_blank" rel="noopener" href="https://github.com/EtherDream/jsproxy">链接</a>）。</p>
+<p><strong>教程</strong>：</p>
+<p>所需时间： 30 分钟.</p>
+<p>需要准备一个干净的，80、443端口没有被占用的linux发行版系统（debian、ubuntu、sentos均可）</p>
+<ol>
+<li><p><strong>自己没有域名的执行以下代码（在root权限下）</strong></p>
+<p><strong><em>curl <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/EtherDream/jsproxy/0.1.0/i.sh">https://raw.githubusercontent.com/EtherDream/jsproxy/0.1.0/i.sh</a> | bash</em></strong></p>
+</li>
+<li><p><strong>自己有域名的，可以执行以下代码<br><em>curl <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/EtherDream/jsproxy/master/i.sh">https://raw.githubusercontent.com/EtherDream/jsproxy/master/i.sh</a> | bash -s example.com</em></strong></p>
+<p>p.s：example.com需要替换成你的域名，且域名要提前解析到要安装反向代理的服务器上</p>
+</li>
+<li><p><strong><code>访问：https://服务器IP.xip.io:8443</code>（具体参考脚本输出的信息）<br>访问: <code>https://example.com:8443</code>（替换为自定义域名）</strong></p>
+<p>注：如果想把端口改为80&amp;&amp;443，可以使用本地端口转发，代码如下：</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">iptables -A PREROUTING -t nat -p tcp --dport 443 -j REDIRECT --to-ports 8443</span><br><span class="line">iptables -A PREROUTING -t nat -p tcp --dport 80 -j REDIRECT --to-ports 8080</span><br></pre></td></tr></table></figure>
+
+<p>随后就可以启动/操作jsproxy了</p>
+<p>jsproxy常用指令（目前jsproxy还无法实现开机自启功能。）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 切换到 jsproxy 用户</span><br><span class="line">su - jsproxy</span><br><span class="line"></span><br><span class="line"># 重启服务</span><br><span class="line">.&#x2F;run.sh reload</span><br><span class="line"></span><br><span class="line"># 关闭服务（参数和 nginx -s 相同）</span><br><span class="line">.&#x2F;run.sh quit</span><br><span class="line"></span><br><span class="line"># 启动服务</span><br><span class="line">.&#x2F;run.sh</span><br><span class="line"></span><br><span class="line"># 查看代理日志</span><br><span class="line">tail server&#x2F;nginx&#x2F;logs&#x2F;proxy.log</span><br></pre></td></tr></table></figure>
+
+<p>切换到jsproxy用户：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">su - jsproxy</span><br></pre></td></tr></table></figure>
+
+<p>进入server/www/asset 编辑index_v3.html</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd server&#x2F;www&#x2F;asset</span><br><span class="line">vi index_v3.html</span><br></pre></td></tr></table></figure>
+
+<p>全选，并粘贴如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!doctype html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;title&gt;我TM直接代理&lt;&#x2F;title&gt;</span><br><span class="line">  &lt;meta charset&#x3D;&quot;utf-8&quot;&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">&lt;——url替换为自己的域名（带https）—-&gt;</span><br><span class="line">        open(url, &#39;_self&#39;)</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>改完记得reload一下jsproxy</strong></p>
+<p>这样就可以实现完全代理网站页面了，除了镜像功能，也可以在url按照格式输入其他站点的域名来代理访问其他站点（请勿用于违法用途）。此外，还可以编辑<strong>allowed-sites.conf</strong>来禁止/重定向某些网站以达到绿色上网的作用。</p>
+<p>至此，镜像站已经搭建完成，后续扩展功能有待发掘</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">John Doe</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://yoursite.com/2020/04/22/%E6%95%99%E7%A8%8B%E4%BD%BF%E7%94%A8jsproxy%E7%BB%99%E7%AB%99%E7%82%B9%E5%81%9A%E9%95%9C%E5%83%8F-%E4%BB%A3%E7%90%86/">http://yoursite.com/2020/04/22/%E6%95%99%E7%A8%8B%E4%BD%BF%E7%94%A8jsproxy%E7%BB%99%E7%AB%99%E7%82%B9%E5%81%9A%E9%95%9C%E5%83%8F-%E4%BB%A3%E7%90%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/jsproxy/">jsproxy</a><a class="post-meta__tags" href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/">科学上网</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/04/25/%E3%80%90%E7%81%AB%E6%98%9F%E3%80%91%E6%B2%99%E9%9B%95%E7%AB%99%E9%95%BF%E7%8E%B0%E5%9C%A8%E6%89%8D%E7%9F%A5%E9%81%93wp%E7%9A%84%E6%97%A7%E7%89%88%E7%BC%96%E8%BE%91%E5%99%A8%E6%AF%94%E6%96%B0%E7%89%88/"><img class="prev-cover" data-lazy-src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">【火星】沙雕站长现在才知道WP的旧版编辑器比新版好N倍</div></div></a></div><div class="next-post pull-right"><a href="/2020/04/14/%E6%81%AD%E5%96%9C%E6%9C%AC%E7%AB%99%E5%BC%95%E5%85%A5%E5%85%88%E8%BE%88%E3%81%AE%E9%87%8D%E5%AE%9A%E5%90%91%E8%BF%AB%E7%9C%9F%E7%BD%91%E9%A1%B5%E7%B3%BB%E5%88%97%E5%A5%BD%E6%97%B6%E4%BB%A3/"><img class="next-cover" data-lazy-src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">恭喜本站引入先辈の重定向+迫真网页系列(好时代,来临力)</div></div></a></div></nav></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2020 By John Doe</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="Increase Font Size"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="Decrease Font Size"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
